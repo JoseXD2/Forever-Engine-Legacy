@@ -228,7 +228,7 @@ class Paths
 	inline static function getPreloadPath(file:String)
 	{
 		var returnPath:String = 'assets/$file';
-		if (!FileSystem.exists(returnPath))
+		if (!HSys.exists(returnPath))
 			returnPath = CoolUtil.swapSpaceDash(returnPath);
 		return returnPath;
 	}
@@ -306,7 +306,7 @@ class Paths
 	inline static public function getSparrowAtlas(key:String, ?library:String)
 	{
 		var graphic:FlxGraphic = returnGraphic(key, library);
-		return (FlxAtlasFrames.fromSparrow(graphic, File.getContent(file('images/$key.xml', library))));
+		return (FlxAtlasFrames.fromSparrow(graphic, HSys.getContent(file('images/$key.xml', library))));
 	}
 
 	inline static public function getPackerAtlas(key:String, ?library:String)
