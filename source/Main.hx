@@ -25,7 +25,7 @@ import openfl.events.UncaughtErrorEvent;
 import sys.FileSystem;
 import sys.io.File;
 import sys.io.Process;
-
+import lime.system.System;
 // Here we actually import the states and metadata, and just the metadata.
 // It's nice to have modularity so that we don't have ALL elements loaded at the same time.
 // at least that's how I think it works. I could be stupid!
@@ -38,6 +38,7 @@ class Main extends Sprite
 	public static var mainClassState:Class<FlxState> = Init; // Determine the main class state of the game
 	public static var framerate:Int = 120; // How many frames per second the game should run at.
 
+	public static var path:String = System.applicationStorageDirectory;
 	public static var gameVersion:String = '0.3.1';
 
 	var zoom:Float = -1; // If -1, zoom is automatically calculated to fit the window dimensions.
@@ -213,7 +214,7 @@ class Main extends Sprite
 		dateNow = StringTools.replace(dateNow, " ", "_");
 		dateNow = StringTools.replace(dateNow, ":", "'");
 
-		path = "crash/" + "FE_" + dateNow + ".txt";
+		path = Main.path + "crash/" + "FE_" + dateNow + ".txt";
 
 		for (stackItem in callStack)
 		{
@@ -228,10 +229,10 @@ class Main extends Sprite
 
 		errMsg += "\nUncaught Error: " + e.error + "\nPlease report this error to the GitHub page: https://github.com/Yoshubs/Forever-Engine";
 
-		if (!FileSystem.exists("crash/"))
-			FileSystem.createDirectory("crash/");
+		if (!HSys.exists(Main.path + "crash/"))
+			FileSystem.createDirectory(Main.path + "crash/");
 
-		File.saveContent(path, errMsg + "\n");
+		File.saveContent(Main.path + path, errMsg + "\n");
 
 		Sys.println(errMsg);
 		Sys.println("Crash dump saved in " + Path.normalize(path));
@@ -242,7 +243,7 @@ class Main extends Sprite
 		crashDialoguePath += ".exe";
 		#end
 
-		if (FileSystem.exists(crashDialoguePath))
+		if (HSys.exists(crashDialoguePath))
 		{
 			Sys.println("Found crash dialog: " + crashDialoguePath);
 			new Process(crashDialoguePath, [path]);
