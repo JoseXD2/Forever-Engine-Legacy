@@ -64,7 +64,7 @@ class CoolUtil
 		var libraryArray:Array<String> = [];
 
 		#if sys
-		var unfilteredLibrary = FileSystem.readDirectory('$subDir/$library');
+		var unfilteredLibrary = HSys.readDirectory('$subDir/$library');
 
 		for (folder in unfilteredLibrary)
 		{
